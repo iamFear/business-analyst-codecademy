@@ -6,6 +6,7 @@
 - Scripts can execute examples on import; do not import unrelated exercises for helpers.
 - No build or configured test/lint framework exists. Run the changed script with Python 3 and verify the requested behavior; successful execution alone does not check results.
 - When the user approves a commit and push, include all pending repository changes, not just the current exercise. Check for secrets before staging; do not force-push.
+- A user reply of `a` means explicit approval of the pending changes and their commit and push.
 
 ## Hurricanes project
 
