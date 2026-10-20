@@ -184,7 +184,24 @@ for rating, hurricane_list in hurricanes_by_mortality.items():
 
 # 8 Calculating Hurricane Maximum Damage
 
+def find_costliest_hurricane(hurricane_data):
+    # None means no recorded damage has been found, not a cost of zero.
+    costliest_name = None
+    highest_damage = None
+    for hurricane in hurricane_data.values():
+        damage = hurricane["Damage"]
+        # Missing damage is text and cannot be compared with numeric costs.
+        if damage == "Damages not recorded":
+            continue
+        # Keep the first recorded cost, then replace it only for a higher cost.
+        if highest_damage is None or damage > highest_damage:
+            costliest_name = hurricane["Name"]
+            highest_damage = damage
+    return costliest_name, highest_damage
+
 # find highest damage inducing hurricane and its total cost
+costliest_name, highest_damage = find_costliest_hurricane(hurricanes)
+print(f"The costliest hurricane was {costliest_name}, causing ${highest_damage:,.2f} in damage.")
 
 
 # 9
