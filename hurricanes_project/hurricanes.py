@@ -99,7 +99,21 @@ print(hurricanes_by_year[1932])
 # 4
 # Counting Damaged Areas
 
+def count_affected_areas(hurricane_data):
+    area_counts = {}
+    # Visit every hurricane, then each area in its affected-areas list.
+    for hurricane in hurricane_data.values():
+        for area in hurricane["Areas Affected"]:
+            # Start a counter the first time an area appears.
+            if area not in area_counts:
+                area_counts[area] = 0
+            # Count each occurrence using the area's exact supplied name.
+            area_counts[area] += 1
+    return area_counts
+
 # create dictionary of areas to store the number of hurricanes involved in
+area_counts = count_affected_areas(hurricanes)
+print(area_counts)
 
 
 # 5 
