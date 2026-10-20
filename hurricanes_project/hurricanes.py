@@ -120,18 +120,66 @@ print(area_counts)
 # Calculating Maximum Hurricane Count
 
 # find most frequently affected area and the number of hurricanes involved in
+def find_most_affected_area():
+    max_count = 0
+    most_affected_area = None
+    for area, count in area_counts.items():
+        if count > max_count:
+            max_count = count
+            most_affected_area = area
+    return most_affected_area, max_count
+
+most_affected_area, max_count = find_most_affected_area()
+print(f"The most frequently affected area is {most_affected_area}, with {max_count} hurricanes.")
 
 
 # 6
 # Calculating the Deadliest Hurricane
 
+def find_deadliest_hurricane(hurricane_data):
+    # With no hurricanes, there is no name and the death count stays zero.
+    deadliest_name = None
+    highest_deaths = 0
+    for hurricane in hurricane_data.values():
+        # Keep the first hurricane, then replace it only for a higher death count.
+        if deadliest_name is None or hurricane["Deaths"] > highest_deaths:
+            deadliest_name = hurricane["Name"]
+            highest_deaths = hurricane["Deaths"]
+    # Return both results together as a tuple: (name, death count).
+    return deadliest_name, highest_deaths
+
 # find highest mortality hurricane and the number of deaths
+deadliest_name, highest_deaths = find_deadliest_hurricane(hurricanes)
+print(f"The deadliest hurricane was {deadliest_name}, causing {highest_deaths} deaths.")
 
 # 7
 # Rating Hurricanes by Mortality
 
+mortality_scale = {0: 0,
+                   1: 100,
+                   2: 500,
+                   3: 1000,
+                   4: 10000}
+
+def rate_hurricanes_by_mortality(hurricane_data):
+    # Include all six ratings, even when a rating has no hurricanes.
+    hurricanes_by_mortality = {rating: [] for rating in range(6)}
+    for hurricane in hurricane_data.values():
+        # Start at zero and move up while deaths exceed the rating's upper bound.
+        rating = 0
+        while rating < 5 and hurricane["Deaths"] > mortality_scale[rating]:
+            rating += 1
+        # Rating 5 has no upper bound; keep each hurricane in its rating's list.
+        hurricanes_by_mortality[rating].append(hurricane)
+    return hurricanes_by_mortality
 
 # categorize hurricanes in new dictionary with mortality severity as key
+hurricanes_by_mortality = rate_hurricanes_by_mortality(hurricanes)
+# Print each rating as a heading so its hurricane group is easy to identify.
+for rating, hurricane_list in hurricanes_by_mortality.items():
+    print(f"Mortality rating {rating}:")
+    for hurricane in hurricane_list:
+        print(f"  {hurricane['Name']}: {hurricane['Deaths']} deaths")
 
 
 # 8 Calculating Hurricane Maximum Damage
