@@ -212,4 +212,25 @@ damage_scale = {0: 0,
                 3: 10000000000,
                 4: 50000000000}
   
+def rate_hurricanes_by_damage(hurricane_data):
+    # Create a separate list for each damage rating, including empty groups.
+    hurricanes_by_damage = {rating: [] for rating in range(6)}
+    for hurricane in hurricane_data.values():
+        damage = hurricane["Damage"]
+        # Unknown damage cannot be rated and does not mean zero damage.
+        if damage == "Damages not recorded":
+            continue
+        # Move up until the cost fits the upper bound, or reaches rating 5.
+        rating = 0
+        while rating < 5 and damage > damage_scale[rating]:
+            rating += 1
+        hurricanes_by_damage[rating].append(hurricane)
+    return hurricanes_by_damage
+
 # categorize hurricanes in new dictionary with damage severity as key
+hurricanes_by_damage = rate_hurricanes_by_damage(hurricanes)
+# Show each rating clearly, followed by its hurricanes and formatted costs.
+for rating, hurricane_list in hurricanes_by_damage.items():
+    print(f"Damage rating {rating}:")
+    for hurricane in hurricane_list:
+        print(f"  {hurricane['Name']}: ${hurricane['Damage']:,.2f}")
