@@ -16,3 +16,20 @@ medical_costs["Vinay"] = 3325.0
 
 # print the medical_costs dictionary
 print(medical_costs)
+
+# Start the running total at zero, then add each patient's insurance cost.
+total_cost = 0
+for cost in medical_costs.values():
+    total_cost += cost
+
+# Divide the total by the number of patients to find the average cost.
+average_cost = total_cost / len(medical_costs)
+
+# Matching positions in these lists connect each patient's name to their age.
+names = ["Marina", "Vinay", "Connie", "Isaac", "Valentina"]
+ages = [27, 24, 43, 35, 52]
+
+# zip() pairs matching positions; list() stores the pairs as a reusable list.
+zipped_ages = list(zip(names, ages))
+
+
