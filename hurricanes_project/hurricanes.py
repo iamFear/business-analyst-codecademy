@@ -79,7 +79,21 @@ print(hurricanes["Cuba I"])
 # 3
 # Organizing by Year
 
+def organize_by_year(hurricane_data):
+    hurricanes_by_year = {}
+    # Read each hurricane's details from the name-keyed dictionary.
+    for hurricane in hurricane_data.values():
+        year = hurricane["Year"]
+        # Start a list when this year is encountered for the first time.
+        if year not in hurricanes_by_year:
+            hurricanes_by_year[year] = []
+        # Append rather than replace so hurricanes in the same year are kept.
+        hurricanes_by_year[year].append(hurricane)
+    return hurricanes_by_year
+
 # create a new dictionary of hurricanes with year and key
+hurricanes_by_year = organize_by_year(hurricanes)
+print(hurricanes_by_year[1932])
 
 
 # 4
