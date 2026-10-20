@@ -53,7 +53,28 @@ print(updated_damages)
 # 2 
 # Create a Table
 
+def create_hurricanes(names, months, years, max_sustained_winds,
+                      areas_affected, damages, deaths):
+    hurricanes = {}
+    # The same index in every list describes the same hurricane.
+    for index in range(len(names)):
+        # Use each name as a key and collect its details in a nested dictionary.
+        hurricanes[names[index]] = {
+            "Name": names[index],
+            "Month": months[index],
+            "Year": years[index],
+            "Max Sustained Wind": max_sustained_winds[index],
+            "Areas Affected": areas_affected[index],
+            "Damage": damages[index],
+            "Deaths": deaths[index]
+        }
+    return hurricanes
+
 # Create and view the hurricanes dictionary
+# Use the converted damages from step 1 so recorded costs are numeric.
+hurricanes = create_hurricanes(names, months, years, max_sustained_winds,
+                               areas_affected, updated_damages, deaths)
+print(hurricanes["Cuba I"])
 
 # 3
 # Organizing by Year
